@@ -51,27 +51,10 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
-  interface valueState {
-    battery: number;
-
-    userVal: string;
-
-    updateBattery: (newVal: number) => void;
-    updateUserVal: (newVal: string) => void;
-  }
-
-  const useValueStore = create<valueState>()((set) => ({
-    battery: 0,
-    userVal: "",
-    updateBattery: (newval) => set({ battery: newval }),
-    updateUserVal: (newval) => set({ userVal: newval }),
-  }));
-
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="index" options={{ headerShown: true }} />
-        <Stack.Screen name="battery" options={{ presentation: "modal" }} />
       </Stack>
     </ThemeProvider>
   );

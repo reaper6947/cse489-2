@@ -1,6 +1,6 @@
 import { useState } from "react";
 import DropDownPicker from "react-native-dropdown-picker";
-import { Link, Tabs } from "expo-router";
+import { Link } from "expo-router";
 import {
   Platform,
   StyleSheet,
@@ -16,12 +16,15 @@ export default function App() {
   function log() {
     console.log(getValue);
   }
+
   const [open, setOpen] = useState(false);
-  const [getValue, setValue] = useState("/battery");
+  const [getValue, setValue] = useState<"/batteryinput" | "/wifi" | "/custom">(
+    "/batteryinput"
+  );
   const [items, setItems] = useState([
     { label: "Custom broadcast receiver", value: "/custom" },
     { label: "Wifi State Change", value: "/wifi" },
-    { label: "System battery notification receiver", value: "/battery" },
+    { label: "System battery notification receiver", value: "/batteryinput" },
   ]);
 
   return (
@@ -34,21 +37,14 @@ export default function App() {
         setValue={setValue}
         setItems={setItems}
       />
-      <Link
-        href={{
-          pathname: "/[val]",
-          params: { val: getValue },
-        }}
-        asChild
-      >
-        <Pressable>
-          {({ pressed }) => (
-            <Text style={styles.btn} onPress={() => log()}>
-              Next
-            </Text>
-          )}
-        </Pressable>
-      </Link>
+
+      <Pressable>
+        {({ pressed }) => (
+          <Link href={getValue}>
+            <Text style={styles.btn}>Next</Text>
+          </Link>
+        )}
+      </Pressable>
     </View>
   );
 }
